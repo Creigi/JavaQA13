@@ -3,6 +3,9 @@ import org.junit.jupiter.api.Test;
 import ru.netology.manager.TicketManager;
 import ru.netology.repositories.TicketRepository;
 import ru.netology.tickets.Ticket;
+import ru.netology.tickets.TicketDurationComparator;
+
+import java.util.Comparator;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,6 +13,7 @@ class TicketManagerTest {
 
     TicketRepository repository = new TicketRepository();
     TicketManager manager = new TicketManager(repository);
+    TicketDurationComparator comparator = new TicketDurationComparator();
 
     Ticket ticket1 = new Ticket(1, 1000, "DME", "LED", 20);
     Ticket ticket2 = new Ticket(5, 200, "DME", "KUF", 120);
@@ -17,7 +21,7 @@ class TicketManagerTest {
     Ticket ticket4 = new Ticket(40, 2000, "DME", "KUF", 50);
     Ticket ticket5 = new Ticket(23, 1400, "LED", "MOW", 99);
     Ticket ticket6 = new Ticket(55, 500, "MOW", "KUF", 100);
-    Ticket ticket7 = new Ticket(6, 100, "MOV", "LED", 54);
+    Ticket ticket7 = new Ticket(6, 100, "MOV", "LED", 154);
     Ticket ticket8 = new Ticket(3, 1650, "KUF", "LED", 102);
     Ticket ticket9 = new Ticket(63, 1000, "MOV", "LED", 100);
     Ticket ticket10 = new Ticket(80, 900, "MOV", "LED", 150);
@@ -117,6 +121,26 @@ class TicketManagerTest {
 
         Ticket[] expected = {ticket7, ticket2, ticket10, ticket1, ticket9, ticket3, ticket5, ticket8, ticket4};
         Ticket[] actual = repository.findAll();
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void findFewMatchesWIthSortComparator() {
+        manager.addTicket(ticket1);
+        manager.addTicket(ticket2);
+        manager.addTicket(ticket3);
+        manager.addTicket(ticket4);
+        manager.addTicket(ticket5);
+        manager.addTicket(ticket6);
+        manager.addTicket(ticket7);
+        manager.addTicket(ticket8);
+        manager.addTicket(ticket9);
+        manager.addTicket(ticket10);
+
+
+        Ticket[] expected = {ticket9, ticket10, ticket7};
+        Ticket[] actual = manager.findAll("MOV", "LED", comparator);
 
         Assertions.assertArrayEquals(expected, actual);
     }
