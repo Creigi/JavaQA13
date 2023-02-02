@@ -1,3 +1,7 @@
+package ru.netology.repositories;
+
+import ru.netology.tickets.Ticket;
+
 import java.util.Arrays;
 
 public class TicketRepository {

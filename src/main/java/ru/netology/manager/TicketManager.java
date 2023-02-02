@@ -1,3 +1,10 @@
+package ru.netology.manager;
+
+import ru.netology.repositories.TicketRepository;
+import ru.netology.tickets.Ticket;
+
+import java.util.Arrays;
+
 public class TicketManager {
 
     private TicketRepository repository;
@@ -26,6 +33,7 @@ public class TicketManager {
                 result = tmp;
             }
         }
+        Arrays.sort(result);
         return result;
     }
 
